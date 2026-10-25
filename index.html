@@ -52,6 +52,9 @@ fieldset{border:0;padding:0;margin:12px 0}
 .row{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid var(--line)}
 .qty{display:flex;align-items:center;gap:14px;margin-top:12px}
 .qty button{width:42px;height:42px;border-radius:50%;border:2px solid var(--ink);background:none;color:var(--ink);font-size:22px;cursor:pointer}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.gallery img,.gallery .ph{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;border-radius:6px}
+.gallery .ph{background:var(--line);color:var(--muted);display:flex;align-items:center;justify-content:center;font-weight:500}
 section{padding:60px 0;border-top:2px solid var(--line)}
 h2{font-size:clamp(38px,6vw,60px);font-weight:800;text-transform:uppercase;margin-bottom:28px}
 .band{background:var(--moss);color:var(--on-moss);border:0}
@@ -74,7 +77,7 @@ footer{padding:36px 0 48px;color:var(--muted);font-size:15px;border-top:2px soli
 <div class="wrap">
   <nav>
     <b>APEX TEAM 73</b>
-    <div><a href="#histoire">Histoire</a><a href="#parties">Parties</a><a href="#resto">Sur place</a><a href="#regles">Règles</a><a href="#adhesion">Tarifs</a><a href="#contact">Contact</a></div>
+    <div><a href="#histoire">Histoire</a><a href="#parties">Parties</a><a href="#resto">Sur place</a><a href="#photos">Photos</a><a href="#regles">Règles</a><a href="#adhesion">Tarifs</a><a href="#contact">Contact</a></div>
   </nav>
   <header class="hero">
     <div>
@@ -105,11 +108,11 @@ footer{padding:36px 0 48px;color:var(--muted);font-size:15px;border-top:2px soli
 <section id="regles" class="band"><div class="wrap">
   <h2>Sécurité et règles</h2>
   <ul class="rules">
-    <li><b>Lunettes Homologue</b> obligatoires sur tout le terrain, tout le temps.</li>
-    <li><b>Limite à 1.2 J</b> pour les répliques, contrôle au chronographe avant chaque partie.</li>
+    <li><b>Lunettes fermées</b> obligatoires sur tout le terrain, tout le temps.</li>
+    <li><b>Limite à 1,5 J</b> pour les répliques, contrôle au chronographe avant chaque partie.</li>
     <li><b>Fair-play</b> : on annonce « touché » et on lève la main sans discuter.</li>
     <li><b>Zone sûre</b> : chargeur retiré et répliques en sécurité hors terrain.</li>
-    <li><b>Âge requis</b> : à partir de 18 ans.</li>
+    <li><b>Mineurs</b> : à partir de 16 ans avec autorisation parentale signée.</li>
     <li><b>Zéro alcool</b> avant et pendant les parties.</li>
   </ul>
 </div></section>
@@ -129,6 +132,15 @@ footer{padding:36px 0 48px;color:var(--muted);font-size:15px;border-top:2px soli
   <p style="max-width:62ch;margin-top:0">Ajoutez vos sandwichs et votre eau à votre réservation. Tout se règle sur place le jour de la partie.</p>
   <div class="grid" id="food"></div>
   <p><button class="btn" data-open="play">Réserver ma partie et mes repas</button></p>
+</div></section>
+
+<section id="photos"><div class="wrap">
+  <h2>Photos</h2>
+  <div class="gallery">
+    <div class="ph">Photo à venir</div>
+    <div class="ph">Photo à venir</div>
+    <div class="ph">Photo à venir</div>
+  </div>
 </div></section>
 
 <section id="contact"><div class="wrap">
@@ -226,6 +238,13 @@ $("#go").onclick=()=>{
   $("#out").scrollIntoView({block:"nearest"});
 };
 draw();
+</script>
+<script>
+(function(){
+const g=document.querySelector(".gallery"),ex=["jpg","jpeg","png","webp"],N=12;
+const load=(i,k)=>new Promise(r=>{ if(k>=ex.length) return r(null); const im=new Image(); im.onload=()=>r(im); im.onerror=()=>load(i,k+1).then(r); im.src="photos/photo"+i+"."+ex[k]; });
+Promise.all(Array.from({length:N},(_,i)=>load(i+1,0))).then(a=>{ a=a.filter(Boolean); if(!a.length) return; g.innerHTML=""; a.forEach((im,i)=>{ im.alt="Photo de partie "+(i+1); g.appendChild(im); }); });
+})();
 </script>
 </body>
 </html>
