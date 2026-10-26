@@ -246,5 +246,6 @@ const load=(i,k)=>new Promise(r=>{ if(k>=ex.length) return r(null); const im=new
 Promise.all(Array.from({length:N},(_,i)=>load(i+1,0))).then(a=>{ a=a.filter(Boolean); if(!a.length) return; g.innerHTML=""; a.forEach((im,i)=>{ im.alt="Photo de partie "+(i+1); g.appendChild(im); }); });
 })();
 </script>
+<script src="paiement.js"></script>
 </body>
 </html>
